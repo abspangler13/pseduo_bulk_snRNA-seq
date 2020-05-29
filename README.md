@@ -40,5 +40,6 @@ Then run this file on JHPCE:
 ```qsub /dcl01/ajaffe/data/lab/singleCell/10x_pilot/premRNA/bam_pseudobulk_abby/split_bam_cellType.sh```
 
 
+052920 Moved a bunch of stuff over from the bam_pseudobulk_abby dir to my home dir. Have to make bam files again and edit sh file to contain correct paths. 
 
 
