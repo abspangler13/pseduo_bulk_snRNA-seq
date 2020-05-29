@@ -1,0 +1,43 @@
+---
+title: "R Notebook"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+ssh j
+qrsh
+R
+```{r}
+library('SingleCellExperiment')
+# library('here')
+# library('jaffelab')
+# library('scater')
+# library('scran')
+# library('pheatmap')
+# library('readxl')
+# library('Polychrome')
+# library('cluster')
+# library('limma')
+# library('sessioninfo')
+# library('reshape2')
+# library('lmerTest')
+
+```
+
+
+```{r}
+load("/dcl01/lieber/ajaffe/Matt/MNT_thesis/snRNAseq/10x_pilot_FINAL/rdas/regionSpecific_Amyg-n2_cleaned-combined_SCE_MNTFeb2020.rda")
+pd = colData(sce.amy)[,c("Barcode", "Sample", "region", "donor", "processDate", "protocol", "prelimCluster", "cellType")]
+pd$Barcode = as.character(pd$Barcode)
+pd$sample_dir = paste0(pd$donor, "_","Amy")
+sample_tab = pd[!duplicated(pd[,-1]),-1]
+
+#generate the file path to the bam files. Going to have a problem here with the two NeuN samples. 
+sample_tab$BAM = paste0("/dcl01/ajaffe/data/lab/singleCell/10x_pilot/premRNA/",
+	sample_tab$donor, "_","Amy","/","outs","/","possorted_genome_bam.bam")
+write.table(as.data.frame(pd), "barcode_level_cellType_Amy_map.tsv",
+	row.names=FALSE, col.names=FALSE, quote=FALSE, sep="\t")
+write.table(as.data.frame(sample_tab), "sample_level_cellType_Amy_map.tsv",
+	row.names=FALSE, col.names=FALSE, quote=FALSE, sep="\t")
+```
